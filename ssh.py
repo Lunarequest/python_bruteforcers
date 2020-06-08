@@ -35,7 +35,7 @@ def succes(username, password):
                **********
                """
     print(colorama.Fore.RED, message)
-def bruteforce(host, passwordlist, username, port):
+def bruteforce(host, passwordlist, username, port=22):
     status = os.path.isfile(passwordlist)
     #check if paswordlist exists
     if status != False:
@@ -86,11 +86,23 @@ parser.add_argument("--port", type=int, default=22, help="port on  remote machin
 args = parser.parse_args()
 
 def main(args):
-   host = args.host
-   passwordlist = args.passwordlist
-   username = args.useranme
-   port = args.port
-   bruteforce(host, passwordlist, username, port)
+    host = args.host
+    if host is None:
+        print("host not specified. usage is python ssh.py <args> for more use the --help flag")
+        exit()
+    passwordlist = args.passwordlist
+    if passwordlist is None:
+        print("passwordlist not specified. usage is python ssh.py <args> for more use the --help flag")
+        exit()
+    username = args.useranme
+    if username is None:
+        print("hostname not specified. usage is python ssh.py <args> for more use the --help flag")
+        exit()
+    port = args.port
+    if port is not None:    
+      bruteforce(host, passwordlist, username, port)
+    else:
+        bruteforce(host, passwordlist, username)
 
 
 if __name__ == "__main__":
