@@ -100,7 +100,7 @@ def main(args):
         exit()
     port = args.port
     if port is not None:    
-      bruteforce(host, passwordlist, username, port)
+        bruteforce(host, passwordlist, username, port)
     else:
         bruteforce(host, passwordlist, username)
 
