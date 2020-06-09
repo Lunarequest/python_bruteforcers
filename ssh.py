@@ -97,20 +97,22 @@ args = parser.parse_args()
 def main(args):
     host = args.host
     if host is None:
-        print("host not specified. usage is python ssh.py <args> for more use the --help flag")
+        print("host not specified. usage is python ssh.py <args>\nfor more use the --help flag")
         exit()
     passwordlist = args.passwordlist
     if passwordlist is None:
-        print("passwordlist not specified. usage is python ssh.py <args> for more use the --help flag")
+        print("passwordlist not specified. usage is python ssh.py <args>\nfor more use the --help flag")
         exit()
     username = args.useranme
     if username is None:
-        print("hostname not specified. usage is python ssh.py <args> for more use the --help flag")
+        print("hostname not specified. usage is python ssh.py <args>\nfor more use the --help flag")
         exit()
     port = args.port
     if port is not None:    
+        print("remeber the program is only as good as your passwordlist")
         bruteforce(host, passwordlist, username, port)
     else:
+        print("remeber the program is only as good as your passwordlist")
         bruteforce(host, passwordlist, username)
 
 

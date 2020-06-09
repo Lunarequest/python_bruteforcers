@@ -1,3 +1,4 @@
-# ssh_bruteforcer
+# python_bruteforcers
 
-A simple implemation of a ssh bruteforcer written in python
+simple implemations of a bruteforcers for a varity of protocols written in python
+
