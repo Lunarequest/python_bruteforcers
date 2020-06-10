@@ -4,6 +4,7 @@ import paramiko
 import argparse
 import socket
 import colorama
+import sys
 #init for colrama
 colorama.init()
 
@@ -53,6 +54,7 @@ def bruteforce(host, passwordlist, username, port=22):
             #check if username is a list or a single username
             check = os.path.isfile(username)
             if check:
+                found = False
                 with open(username,'r') as users:
                     for  user in users:
                         with open(passwordlist,'r') as passwords:
@@ -63,21 +65,20 @@ def bruteforce(host, passwordlist, username, port=22):
                                     break
                                 elif code == 2:
                                     unkown(username,row)
-                            if code==0:
-                                pass
-                            else:
+                            if found==False:
                                 print(f"no valid password in passwordlist for username:{row}")
             else:
+                found = False
                 with open(passwordlist,'r') as f:
                     for row in f:
                         code = ssh_connection(host, port, username, row)
                         if code == 0:
+                            found = True
                             succes(username, row)
-                            break
-                        if code==0:
-                                pass
-                        else:
-                                print(f"no valid password in passwordlist for username:{username}")
+                            sys.exit(0)
+                        if found==False:
+                            print(f"no valid password in passwordlist for username:{username}")
+                            sys.exit(1)
         else:
             failed = "host is down or port is closed"
             return failed

